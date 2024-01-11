@@ -355,7 +355,7 @@ footer nav ul {
 	background: #fff;
 	border-radius: 10px;
 	position: absolute;
-	top: 20%;
+	top: 10%;
 	left: 50%;
 	transform: translate(-50%, 0%);
 }
@@ -382,6 +382,16 @@ cursor: pointer;
 	margin-top: 10px;
 }
 
+figure button {
+	padding: 5px 5px;
+	position: absolute;
+	background-color: black;
+	cursor: pointer;
+	border: none;
+	margin:5px 0px 0px 47px;
+	border-radius: 2px;
+}
+
 #TrashPosition {
 	padding: 5px 5px;
 	position: absolute;
@@ -392,7 +402,7 @@ cursor: pointer;
 	border-radius: 2px;
 }
 
-#TrashPosition i {
+button .fa-trash-can {
 	margin: auto;
 	border-radius: 15px;
 }

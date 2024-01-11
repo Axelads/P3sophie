@@ -23,7 +23,7 @@ function toggleModalContainer() {
                     const figure = document.createElement("figure");
                     const btnIcone = document.createElement("button");
                     btnIcone.id = "TrashPosition";
-                    btnIcone.setAttribute('value', ValeurIcone++);
+                    btnIcone.setAttribute('id', `btn-${data.id}`);
 
                     let trashIcon = document.createElement("i");
                     trashIcon.className = "fa-regular fa-trash-can";
@@ -34,7 +34,7 @@ function toggleModalContainer() {
                     // Insertion des images de l'api  
                     let dynamiqueimage = document.createElement("img");
                     dynamiqueimage.src = data.imageUrl;
-                    dynamiqueimage.setAttribute('value', ValeurImg++);
+                    dynamiqueimage.setAttribute('id', `img-${data.id}`);
 
                 
                     figure.appendChild(btnIcone);
@@ -134,7 +134,8 @@ PostModale ();
 // Evenement pour fermer la modale en cliquant sur le X
 function CloseModalButton() {
     const closeModalButton = document.querySelector('.close-add-modal');
-    closeModalButton.addEventListener('click', () => {
+    closeModalButton.addEventListener('click', (e) => {
+        e.preventDefault();
         const interieurModale = document.querySelector("#modal1");
         const interieurModale2 = document.querySelector("#modal2");
         const ModalContainer = document.querySelector('.modal-container');

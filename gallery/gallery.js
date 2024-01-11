@@ -12,7 +12,7 @@ fetch(urlImage)
       let dynamiqueimage = document.createElement("img")
       dynamiqueimage.src = data.imageUrl;
       dynamiqueimage.alt = data.title;
-      dynamiqueimage.classList.add(data.category.id);
+      dynamiqueimage.setAttribute("id" , data.id);
 
     // Insertion des titres des images   
       const figcaption = document.createElement("figcaption");
