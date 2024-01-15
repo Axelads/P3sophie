@@ -1,17 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
 const modale = document.querySelector(".modal");
 
-modale.addEventListener("click", async (event) => {
+modale.addEventListener("click", (event) => {
     event.preventDefault();
-
+    
     if (event.target.classList.contains("fa-trash-can")) {
         const token = localStorage.getItem("token");
         const modale1 = document.querySelector("#modal1");
+        const Gallery = document.querySelector(".gallery");
+
+
+        const imagesGallery = Gallery.querySelectorAll("img");
+        imagesGallery.forEach((image) => {
+            const ImageId = image.id;
+            console.log("image ID:", ImageId)
+        })
+        
         
         let slicedImageId, sliceButtonId;
 
-        const images = modale1.querySelectorAll("img");
-        images.forEach((image) => {
+        const imagesModale = modale1.querySelectorAll("img");
+        imagesModale.forEach((image) => {
             const imageId = image.id;
             slicedImageId = imageId.slice(4);
             console.log("slicedImageId:", slicedImageId);
@@ -23,15 +32,17 @@ modale.addEventListener("click", async (event) => {
             sliceButtonId = buttonId.slice(4);
         });
 
+
         if (sliceButtonId === slicedImageId) {
             
-            fetch(`http://localhost:5678/api/works/${slicedImageId}`, {
+            fetch(`http://localhost:5678/api/works/${ImageId}`, {
                     method: "DELETE",
                     headers: {
                         "Accept": "application/json",
                         "Authorization": `Bearer ${token}`
                     }
                 }).then(response => {
+                    console.log("after fetch")
                     if (response.ok) {
                         console.log(`Image avec l'ID ${slicedImageId} supprimée avec succès.`);
                     } else {

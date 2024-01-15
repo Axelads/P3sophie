@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
 }
 });
 
-import { PostModale } from "./PostModale.js";
+// import { PostModale } from "./PostModale.js";
 const addImgButton = document.querySelector('.addImg');
 const interieurModale = document.querySelector("#modal1");
 const interieurModale2 = document.querySelector("#modal2");
@@ -94,8 +94,8 @@ addImgButton.addEventListener('click', function() {
         <div class="ajoutPhoto">
            <i class="fa-regular fa-image ImgDefault"></i>
            <div class="AjouterPhoto">
-              <label for="input-file">+ Ajouter photo</label>
-              <input type="file" accept="image/jpeg, image/png, image/jpg" id="input-file" max-size="4000" name="imageUrl">
+              <label for="inputFile">+ Ajouter photo</label>
+              <input type="file" accept="image/jpeg, image/png, image/jpg" id="inputFile" max-size="4000" name="imageUrl">
             </div>
             <p>jpg, png : 4mo max</p>
         </div>
@@ -114,6 +114,13 @@ addImgButton.addEventListener('click', function() {
             </div>
     </form>
 </div>`;
+// Verification si le Label est bien clickable
+// const labelAjouterPhoto = document.querySelector('label[for="input-file"]');
+// labelAjouterPhoto.addEventListener('click', function() {
+//     console.log("Label for 'input-file' clicked!");
+// });
+
+// retourner a la modal1 en cliquant sur la fleche
 const returnModalButton = document.getElementById("return-modal");
 returnModalButton.addEventListener('click', (e) => {
     e.preventDefault();
@@ -122,34 +129,43 @@ const interieurModale2 = document.querySelector("#modal2");
     
         interieurModale2.style.display = "none";
         interieurModale.style.display = "block";
-})
-CloseModalButton();
-ChangeImg();
-PostModale ();
-})
 });
+// changement couleur button Valider
+const inputTest = document.getElementById('test');
+inputTest.addEventListener('input', verifierFormulaire);
 
+const selectCategorie = document.getElementById('Selection-Categorie');
+selectCategorie.addEventListener('change', verifierFormulaire);
+function verifierFormulaire() {
+    
+    // const fileInput = document.getElementById('input-file');
+    const textInput1 = document.getElementById('test').value;
+    const textInput2 = document.getElementById('Selection-Categorie').value;
+    
+    if (textInput1 !== '' && textInput2 !== '') {
+        document.getElementById('desact').disabled = false;
+        document.getElementById('desact').style.backgroundColor = '#1D6154';
+    } else {
+        document.getElementById('desact').disabled = true;
+        document.getElementById('desact').style.backgroundColor = 'grey';
+    }
+};
 
-
-// Evenement pour fermer la modale en cliquant sur le X
+// fermer la modal2
+const closeButton = document.querySelector('.close-add-modal');
+closeButton.addEventListener('click', CloseModalButton);
 function CloseModalButton() {
-    const closeModalButton = document.querySelector('.close-add-modal');
-    closeModalButton.addEventListener('click', (e) => {
-        e.preventDefault();
-        const interieurModale = document.querySelector("#modal1");
-        const interieurModale2 = document.querySelector("#modal2");
-        const ModalContainer = document.querySelector('.modal-container');
-        const modalGallery = docuement.querySelector('.modal-Galery');
-        
-        // Vider le contenu de la modal
-        ModalContainer.classList.remove('active');
-        modalGallery.innerHTML=""
-            ValeurIcone = 1;  
-            ValeurImg = 1;
-        
-    });
+    const modalGalery = document.querySelector('.modal-Galery');
+    modalGalery.innerHTML = '';  
+
+    const modalContainer = document.querySelector('.modal-container');
+    modalContainer.classList.remove('active');
 }
 
+ChangeImg();
+// PostModale ();
+})
+});
 
 
 function ChangeImg() {
@@ -157,6 +173,7 @@ function ChangeImg() {
     const fileInput = document.getElementById('input-file');
     
     fileInput.addEventListener('change', function (event) {
+        console.log("File input changed:", event);
         const selectedFile = event.target.files[0];
 
         // Vérification si un fichier est sélectionné
@@ -174,4 +191,7 @@ function ChangeImg() {
             btnValider();
         }
     });
-}
+};
+
+
+
