@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
 }
 });
 
-// import { PostModale } from "./PostModale.js";
+import { PostModale } from "./PostModale.js";
 const addImgButton = document.querySelector('.addImg');
 const interieurModale = document.querySelector("#modal1");
 const interieurModale2 = document.querySelector("#modal2");
@@ -94,8 +94,8 @@ addImgButton.addEventListener('click', function() {
         <div class="ajoutPhoto">
            <i class="fa-regular fa-image ImgDefault"></i>
            <div class="AjouterPhoto">
-              <label for="inputFile">+ Ajouter photo</label>
-              <input type="file" accept="image/jpeg, image/png, image/jpg" id="inputFile" max-size="4000" name="imageUrl">
+              <label for="input-file">+ Ajouter photo</label>
+              <input type="file" accept="image/jpeg, image/png, image/jpg" id="input-file" max-size="4000" name="imageUrl">
             </div>
             <p>jpg, png : 4mo max</p>
         </div>
@@ -130,6 +130,8 @@ const interieurModale2 = document.querySelector("#modal2");
         interieurModale2.style.display = "none";
         interieurModale.style.display = "block";
 });
+
+
 // changement couleur button Valider
 const inputTest = document.getElementById('test');
 inputTest.addEventListener('input', verifierFormulaire);
@@ -142,12 +144,16 @@ function verifierFormulaire() {
     const textInput1 = document.getElementById('test').value;
     const textInput2 = document.getElementById('Selection-Categorie').value;
     
+    const desactButton = document.getElementById('desact');
+
     if (textInput1 !== '' && textInput2 !== '') {
-        document.getElementById('desact').disabled = false;
-        document.getElementById('desact').style.backgroundColor = '#1D6154';
+        desactButton.disabled = false;
+        desactButton.style.background = '#1D6154';
+        desactButton.style.cursor = 'pointer';
     } else {
-        document.getElementById('desact').disabled = true;
-        document.getElementById('desact').style.backgroundColor = 'grey';
+        desactButton.disabled = true;
+        desactButton.style.background = 'grey';
+        desactButton.style.cursor = 'none';
     }
 };
 
@@ -156,14 +162,19 @@ const closeButton = document.querySelector('.close-add-modal');
 closeButton.addEventListener('click', CloseModalButton);
 function CloseModalButton() {
     const modalGalery = document.querySelector('.modal-Galery');
-    modalGalery.innerHTML = '';  
+    const interieurModale = document.querySelector("#modal1");
+     const interieurModale2 = document.querySelector("#modal2");
+
+        modalGalery.innerHTML = '';   
+        interieurModale2.style.display = "none";
+        interieurModale.style.display = "block";
+      
 
     const modalContainer = document.querySelector('.modal-container');
     modalContainer.classList.remove('active');
-}
-
+};
 ChangeImg();
-// PostModale ();
+PostModale();
 })
 });
 
@@ -188,7 +199,6 @@ function ChangeImg() {
             ajoutPhotoDiv.innerHTML = '';
             ajoutPhotoDiv.appendChild(divImg);
             divImg.appendChild(imgElement);
-            btnValider();
         }
     });
 };

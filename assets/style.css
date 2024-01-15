@@ -429,8 +429,6 @@ button .fa-trash-can {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 10px;
-	overflow: hidden;
-	overflow-y: scroll;
 	max-height: 500px;
 	margin-bottom: 30px;
 	margin-left: 40px;
@@ -606,6 +604,7 @@ align-items: center;
 	background: #A7A7A7;
 	color: white;
 	border: none;
+	cursor: none;
 }
 
 .borderValider {
