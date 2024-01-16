@@ -22,11 +22,13 @@ function toggleModalContainer() {
                 for (let data of datas) {
                     const figure = document.createElement("figure");
                     const btnIcone = document.createElement("button");
-                    btnIcone.id = "TrashPosition";
-                    btnIcone.setAttribute('id', `btn-${data.id}`);
+                    btnIcone.setAttribute('value', data.id);
+                    btnIcone.setAttribute('class', "figation");
 
                     let trashIcon = document.createElement("i");
-                    trashIcon.className = "fa-regular fa-trash-can";
+                    trashIcon.classList.add("fa-regular");
+                    trashIcon.classList.add("fa-trash-can");
+                    trashIcon.classList.add("poubelles");
                     trashIcon.style.color = "#FFFFFF";
                     // trashIcon.id = "TrashPosition";
                     
@@ -42,6 +44,7 @@ function toggleModalContainer() {
                     figure.appendChild(dynamiqueimage);
                     modalGallery.appendChild(figure);                                     
                 }
+supp_img();
     })
     }
     if (closeBtn) {
@@ -57,10 +60,31 @@ function toggleModalContainer() {
             modalContainer.classList.remove('active');
             modalGallery.innerHTML=""
             ValeurIcone = 1;  
-        ValeurImg = 1;
+            ValeurImg = 1;
         });
-    }
-}
+    };
+
+
+};
+
+function supp_img() {//pour savoir sur quelle image un a selectionner et envoyer son id a la function delete_img
+    let gallery = document.getElementsByClassName("figation");
+    for (let btn of gallery){
+        btn.addEventListener('click',() => {
+            console.log("Button clicked. ID:", btn.value);
+            let id = btn.value
+            delete_img(id);
+        });
+    };
+};
+
+function delete_img(id) {//pour supprimer l'image de l'API
+const token = localStorage.getItem('token');
+    fetch(`http://localhost:5678/api/works/${id}`, {
+    method: "DELETE",
+    headers: { "Authorization": `Bearer ${token}` }
+  });
+};
 
 document.addEventListener('DOMContentLoaded', function () {
     const modalBtn = document.querySelector('.modalbtn');
