@@ -138,11 +138,6 @@ addImgButton.addEventListener('click', function() {
             </div>
     </form>
 </div>`;
-// Verification si le Label est bien clickable
-// const labelAjouterPhoto = document.querySelector('label[for="input-file"]');
-// labelAjouterPhoto.addEventListener('click', function() {
-//     console.log("Label for 'input-file' clicked!");
-// });
 
 // retourner a la modal1 en cliquant sur la fleche
 const returnModalButton = document.getElementById("return-modal");
