@@ -22,7 +22,7 @@ function login() {
   })
   .then(data => {
     localStorage.setItem('token', data.token);
-    window.location.href = '../index.html';
+    window.location.href = './index.html';
     console.log(data);
   })
   .catch(error => {

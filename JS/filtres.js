@@ -1,6 +1,6 @@
 const formulaire = document.querySelector(".btnS");
 const urlImage = 'http://localhost:5678/api/works';
-import { GeneratGallery } from "../gallery/gallery.js";
+import { GeneratGallery } from "../JS/gallery.js";
 
 
 

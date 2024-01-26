@@ -1,4 +1,4 @@
-import {PageAdmin} from "./admin.js";
+import {PageAdmin} from "../JS/admin.js";
 
 document.addEventListener('DOMContentLoaded', PageAdmin);
 let ValeurIcone = 1;
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
 }
 });
 
-import { PostModale } from "./PostModale.js";
+import { PostModale } from "../JS/PostModale.js";
 const addImgButton = document.querySelector('.addImg');
 const interieurModale = document.querySelector("#modal1");
 const interieurModale2 = document.querySelector("#modal2");
