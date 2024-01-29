@@ -83,7 +83,23 @@ const token = localStorage.getItem('token');
     fetch(`http://localhost:5678/api/works/${id}`, {
     method: "DELETE",
     headers: { "Authorization": `Bearer ${token}` }
-  });
+})
+.then(response => {
+    if (response.ok) {
+        
+        const modalContainer = document.querySelector('.modal-container');
+        modalContainer.classList.remove('active');
+        modalContainer.querySelector('.modal-Galery').innerHTML = "";
+        ValeurIcone = 1;  
+        ValeurImg = 1;
+        
+        
+        location.reload();
+    } else {
+        console.error("Erreur lors de la suppression de l'image");
+    }
+})
+.catch(error => console.error("Erreur réseau:", error));
 };
 
 document.addEventListener('DOMContentLoaded', function () {

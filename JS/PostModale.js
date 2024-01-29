@@ -21,12 +21,19 @@ form.addEventListener('submit', function (event) {
             
              body : formData,
         })
-               
-        
-        .then(data => {
-          console.log("ok")
-          data.push(formData);
-            
-        })
-})
+        .then(response => response.json())
+            .then(data => {
+                console.log("ok", data);
+
+                // Fermer la modale
+                const modalContainer = document.querySelector('.modal-container');
+                modalContainer.classList.remove('active');
+
+              
+                location.reload();
+            })
+            .catch(error => {
+                console.error("Erreur lors de la requête POST:", error);
+            });
+    });
 }
