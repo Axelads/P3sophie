@@ -1,6 +1,6 @@
 const formulaire = document.querySelector(".btnS");
 
-import { GeneratGallery } from "../JS/gallery.js";
+import { GeneratGallery } from "../JS/modale.js";
 
 
 

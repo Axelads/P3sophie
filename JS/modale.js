@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', PageAdmin);
 let ValeurIcone = 1;
 let ValeurImg = 1;
 
-function toggleModalContainer() {
+export function toggleModalContainer() {
     const modalContainer = document.querySelector('.modal-container');
     const closeBtn = document.querySelector('.close-modal');
     const overlay = document.querySelector('.overlay');
@@ -74,33 +74,28 @@ function supp_img() {//pour savoir sur quelle image un a selectionner et envoyer
             console.log("Button clicked. ID:", btn.value);
             let id = btn.value
             delete_img(id);
+            // const modalContainer = document.querySelector('.modal-container');
+            // modalContainer.classList.remove('active');
+            const modalGallery = document.querySelector('.modal-Galery');
+            modalGallery.innerHTML = "";
+            
+            GeneratGallery();
         });
     };
 };
 
-function delete_img(id) {//pour supprimer l'image de l'API
-const token = localStorage.getItem('token');
+function delete_img(id) {
+    const token = localStorage.getItem('token');
     fetch(`http://localhost:5678/api/works/${id}`, {
-    method: "DELETE",
-    headers: { "Authorization": `Bearer ${token}` }
-})
-.then(response => {
-    if (response.ok) {
-        
+      method: "DELETE",
+      headers: { "Authorization": `Bearer ${token}` }
+    })
+    .then(() => {
         const modalContainer = document.querySelector('.modal-container');
         modalContainer.classList.remove('active');
-        modalContainer.querySelector('.modal-Galery').innerHTML = "";
-        ValeurIcone = 1;  
-        ValeurImg = 1;
-        
-        
-        location.reload();
-    } else {
-        console.error("Erreur lors de la suppression de l'image");
-    }
-})
-.catch(error => console.error("Erreur réseau:", error));
-};
+      updateGallery(); // Actualisez la galerie
+    });
+  }
 
 document.addEventListener('DOMContentLoaded', function () {
     const modalBtn = document.querySelector('.modalbtn');
@@ -112,7 +107,6 @@ document.addEventListener('DOMContentLoaded', function () {
 }
 });
 
-import { PostModale } from "../JS/PostModale.js";
 const addImgButton = document.querySelector('.addImg');
 const interieurModale = document.querySelector("#modal1");
 const interieurModale2 = document.querySelector("#modal2");
@@ -127,7 +121,7 @@ addImgButton.addEventListener('click', function() {
         
     interieurModale2.innerHTML = `<div class="button-modale">
                <button class="close-add-modal">X</button>
-               <button id="return-modal"><img src="../Backend/images/arraw-left.png" class="arraw-left" alt="arraw-left"></button>
+               <button id="return-modal"><img src="../assets/images/arraw-left.png" class="arraw-left" alt="arraw-left"></button>
         </div>
         <div class="Ajout-Photo"><h3>Ajout photo</h3></div>
     <form action="" class="form-AjoutPhoto">
@@ -207,6 +201,7 @@ function CloseModalButton() {
 
     const modalContainer = document.querySelector('.modal-container');
     modalContainer.classList.remove('active');
+
 };
 ChangeImg();
 PostModale();
@@ -239,4 +234,90 @@ function ChangeImg() {
 };
 
 
+// GENERATION DE LA GALLERY
 
+export function GeneratGallery() {
+    const Gallery = document.querySelector(".gallery");
+    const urlImage = 'http://localhost:5678/api/works';
+  
+    fetch(urlImage)
+      .then(response => response.json())
+      .then(datas => {
+        for (let data of datas) {
+          const figure = document.createElement("figure");
+  
+          // Insertion des images de l'api
+          let dynamiqueimage = document.createElement("img");
+          dynamiqueimage.src = data.imageUrl;
+          dynamiqueimage.alt = data.title;
+          dynamiqueimage.setAttribute("id", data.id);
+  
+          // Insertion des titres des images
+          const figcaption = document.createElement("figcaption");
+          figcaption.innerHTML = data.title;
+  
+          // construction des balises
+          figure.appendChild(dynamiqueimage);
+          figure.appendChild(figcaption);
+          Gallery.appendChild(figure);
+        }
+      });
+  }
+  GeneratGallery();
+  
+ function updateGallery() {
+    const Gallery = document.querySelector(".gallery");
+    Gallery.innerHTML = '';
+    
+    toggleModalContainer();
+  };
+
+  // AJOUT D'UN PROJET
+
+  async function PostModale() {
+    const fileInput = document.getElementById('input-file');
+    const titleInput = document.querySelector('.form-AjoutPhoto input[type="text"]');
+    const categorySelect = document.getElementById('Selection-Categorie');
+    const form = document.querySelector('.form-AjoutPhoto');
+    const token = localStorage.getItem('token');
+    const Gallery = document.querySelector(".gallery");
+    const modalGallery = document.querySelector('.modal-Galery');
+    
+
+    form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const formData = new FormData;
+        formData.append('title', titleInput.value);
+        formData.append('image', fileInput.files[0]);
+        formData.append('category', categorySelect.value);
+
+        try {
+            // Effectuez la requête POST avec async/await
+            const response = await fetch('http://localhost:5678/api/works', {
+                method: 'POST',
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                },
+                body: formData,
+            });
+
+            // Vérifiez si la requête a réussi
+            if (!response.ok) {
+                throw new Error(`Erreur lors de la requête : ${response.status} - ${response.statusText}`);
+            }
+
+            console.log("OK");
+            Gallery.innerHTML="";
+            modalGallery.innerHTML = "";
+            interieurModale2.style.display = "none";
+            interieurModale.style.display = "block";
+            GeneratGallery();
+            updateGallery();
+            
+        } catch (error) {
+            console.error("Erreur :", error.message);
+            // Gérez l'erreur ici si nécessaire
+        }
+    });
+}
